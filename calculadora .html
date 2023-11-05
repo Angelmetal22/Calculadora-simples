@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora</title>
+</head>
+<body>
+    <h1>Calculadora Simples</h1>
+    <input type="text" id="display" readonly>
+    <br>
+    <button onclick="appendToDisplay('7')">7</button>
+    <button onclick="appendToDisplay('8')">8</button>
+    <button onclick="appendToDisplay('9')">9</button>
+    <button onclick="clearDisplay()">C</button>
+    <br>
+    <button onclick="appendToDisplay('4')">4</button>
+    <button onclick="appendToDisplay('5')">5</button>
+    <button onclick="appendToDisplay('6')">6</button>
+    <button onclick="operate('+')">+</button>
+    <br>
+    <button onclick="appendToDisplay('1')">1</button>
+    <button onclick="appendToDisplay('2')">2</button>
+    <button onclick="appendToDisplay('3')">3</button>
+    <button onclick="operate('-')">-</button>
+    <br>
+    <button onclick="appendToDisplay('0')">0</button>
+    <button onclick="operate('*')">*</button>
+    <button onclick="operate('/')">/</button>
+    <button onclick="calculateResult()">=</button>
+    <br>
+    <button onclick="appendToDisplay('.')">.</button>
+</body>
+<script>
+    var display = document.getElementById('display');
+    var currentInput = '';
+    var currentOperator = null;
+    var lastValue = null;
+
+    function appendToDisplay(value) {
+        currentInput += value;
+        display.value = currentInput;
+    }
+
+    function clearDisplay() {
+        currentInput = '';
+        currentOperator = null;
+        lastValue = null;
+        display.value = '';
+    }
+
+    function operate(operator) {
+        if (currentOperator !== null) {
+            calculateResult();
+        }
+        currentOperator = operator;
+        lastValue = parseFloat(currentInput);
+        currentInput = '';
+    }
+
+    function calculateResult() {
+        if (currentOperator === null) return;
+        if (currentInput === '') return;
+
+        var currentValue = parseFloat(currentInput);
+        switch (currentOperator) {
+            case '+':
+                lastValue += currentValue;
+                break;
+            case '-':
+                lastValue -= currentValue;
+                break;
+            case '*':
+                lastValue *= currentValue;
+                break;
+            case '/':
+                lastValue /= currentValue;
+                break;
+        }
+
+        currentOperator = null;
+        currentInput = lastValue.toString();
+        display.value = currentInput;
+    }
+</script>
+</html>
